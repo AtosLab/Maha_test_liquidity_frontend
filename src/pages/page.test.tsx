@@ -9,7 +9,7 @@ import TEST_LIQUIDITY_ABI from "common/abi/testLiquidity.json";
 const TestPage = () => {
   const { walletConnected, walletAddress, web3, connectWallet, disconnectWallet } = useWalletConnect();
   const [amountEth, setAmountEth] = useState(0);
-  const [tokenAddress, setTokenAddress] = useState("0x6c8c6b02e7b2be14d4fa6022dfd6d75921d90e4e");
+  const [tokenAddress, setTokenAddress] = useState("0x37D09eE52354c215244d387b6C0f08eA20DE35C1");
   const [result, setResult] = useState("");
   const [balanceEth, setBalanceEth] = useState<any>("loading...");
 
