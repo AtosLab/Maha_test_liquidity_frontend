@@ -10,7 +10,7 @@ const TestPage = () => {
   const { walletConnected, walletAddress, web3, connectWallet, disconnectWallet } = useWalletConnect();
   const [amountEth, setAmountEth] = useState(0);
   const [tokenAddress, setTokenAddress] = useState("0x37D09eE52354c215244d387b6C0f08eA20DE35C1");
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<any>("");
   const [balanceEth, setBalanceEth] = useState<any>("loading...");
 
   const _fetchData = async () => {
@@ -23,7 +23,7 @@ const TestPage = () => {
 
   const testLiquidity = async () => {
     if (walletConnected && web3) {
-      console.log(BN.from(amountEth).mul(BN.from(10).pow(BN.from(17))))
+      console.log(BN.from(amountEth).mul(BN.from(10).pow(BN.from(18))));
       setResult(
         await new web3.eth.Contract(TEST_LIQUIDITY_ABI, TEST_LIQUIDITY_ADDRESS).methods.buyback(tokenAddress).send({
           value: BN.from(amountEth).mul(BN.from(10).pow(BN.from(17))),
@@ -35,7 +35,7 @@ const TestPage = () => {
 
   useEffect(() => {
     _fetchData();
-  }, [walletConnected]);
+  }, [walletConnected, result]);
 
   return (
     <ContainerFluid py={"20px"} gridGap={"20px"}>
@@ -79,8 +79,13 @@ const TestPage = () => {
             Run
           </Link>
         </Flex>
-        <Flex>balance : {balanceEth}</Flex>
-        {result && <Flex>liquidity : {result}</Flex>}
+        <Flex>ETH balance : {balanceEth}</Flex>
+        {result && (
+          <Flex col>
+            <Flex>blockHash : {result.blockHash}</Flex>
+            <Flex>blockNumber : {result.blockNumber}</Flex>
+          </Flex>
+        )}
       </Container>
     </ContainerFluid>
   );
